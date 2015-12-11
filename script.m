@@ -19,4 +19,10 @@
 %%
 
 
+[x, fs] = audioread('tony4/cembalo.wav');
+[x, fs] = audioread('tony4/piano.wav');
+t = 0.1;
+k = 0;
 
+func =  funcions;
+func.rec(x, fs, t, k)

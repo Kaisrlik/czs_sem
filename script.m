@@ -18,11 +18,33 @@
 %   funkci readwav. 
 %%
 
-
-[x, fs] = audioread('tony4/cembalo.wav');
-[x, fs] = audioread('tony4/piano.wav');
-t = 0.1;
-k = 0;
+clear all;
+close all;
 
 func =  funcions;
-func.rec(x, fs, t, k)
+
+%[x, fs] = audioread('tony4/cembalo.wav');
+%[x, fs] = audioread('tony4/piano.wav');
+%t = 0.05;
+%k = 0;
+%func.rec(x, fs, t, k)
+
+path = char('cembalo', 'fletna', 'housle', 'kytara', 'piano', 'varhany1', 'varhany2');
+
+size(path)
+
+for j = 1 : size(path,1)
+	p = strcat('tony4/', path(j,:), '.wav');
+	fprintf('File %s\n', p);
+
+	[x, fs] = audioread(p);
+
+	time = [0.05, 0.005, 0.015, 0.030, 0.1, 0.2, 5];
+	for i = 1 : length(time) 
+		t = time(i);
+		tone = func.rec(x, fs, t, 0);
+		fprintf('Test %d -> %s\n', t, tone);
+	end
+
+end
+

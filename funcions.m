@@ -29,8 +29,7 @@ function [d] = fft_w(x, fs, t, k)
 		n = fmax - N;
 	end
 
-	ff=0:fs/N:fs-fs/N;
-
+	ff=0:fs/(N+n):fs-fs/(N+n);
 
 	figure(1);
 	subplot(511);
@@ -43,14 +42,14 @@ function [d] = fft_w(x, fs, t, k)
 	subplot(513);
 	plot(ff, Xabs);
 
-	d = func.maxval(Xabs, 0.8);
-	d = ff(d)
+	d = func.maxval(Xabs);
+	d = ff(d);
 
 end
 
 function [shift] = find_start(x, fs, t)
 	func =  funcions;
-	shift = func.maxval(x, 0.9);
+	shift = func.maxval(x);
 end
 
 function [shift] = max_val(x, k)
@@ -71,9 +70,13 @@ end
 
 function [tone] = map(x)
 	tones = char('c', 'cis', 'd', 'dis', 'e', 'f', 'fis', 'g', 'gis', 'a', 'ais', 'h', 'c*');
-	a = 2^(1/12);
-	freq = [440/a^9, 440/a^8, 440/a^7, 440/a^6, 440/a^5, 440/a^4, 440/a^3, 440/a^2, 440/a, 440, 440*a, 440*a^2, 440*a^3];
+	s = 2^(1/12);
+	a = 440;
+	freq = [a/s^9, a/s^8, a/s^7, a/s^6, a/s^5, a/s^4, a/s^3, a/s^2, a/s, a, a*s,a*s^2, a*s^3];
 	[c i] = min(abs(freq-x));
 	d = freq(i);
 	tone = tones(i,:);
+	if c > 100
+		tone = 'none';
+	end
 end

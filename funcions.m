@@ -16,7 +16,7 @@ function [d] = fft_w(x, fs, t, k)
 	func =  funcions;
 	n = 0;
 	N = fs*t; %delka segmenty pro delky ms
-	fmax = 1024;
+	fmax = 2048;
 
 	if N > length(x) - k;
 		N = length(x) - k;
@@ -29,22 +29,36 @@ function [d] = fft_w(x, fs, t, k)
 		n = fmax - N;
 	end
 
+	wn = [200/(fs/2), 600/(fs/2)];
+	b = fir1(64, wn, 'bandpass');
+%	figure(5);
+%	zplane(b);
+
+%	figure(3);
+%	freqz(b, 1);
+%	figure(4);
+%	impz(b, 1);
+
+	x = filter(b, 1, x);
+
 	ff=0:fs/(N+n):fs-fs/(N+n);
 
 	figure(1);
-	subplot(511);
+	subplot(311);
 	plot(x);
 
 	X = fft(x(1+k:N+k), N + n);
 	Xabs = abs(X);
-	subplot(512);
+	subplot(312);
 	plot(x(1+k:N+k));
-	subplot(513);
+	subplot(313);
+	limit = floor(length(ff)/50);
+	ff = ff(1:limit);
+	Xabs = Xabs(1:limit);
 	plot(ff, Xabs);
 
-	d = func.maxval(Xabs);
+	d = func.maxval(Xabs, 0.8);
 	d = ff(d);
-
 end
 
 function [shift] = find_start(x, fs, t)

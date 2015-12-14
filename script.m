@@ -31,8 +31,6 @@ func =  funcions;
 
 path = char('cembalo', 'fletna', 'housle', 'kytara', 'piano', 'varhany1', 'varhany2');
 
-size(path)
-
 for j = 1 : size(path,1)
 	p = strcat('tony4/', path(j,:), '.wav');
 	fprintf('File %s\n', p);
@@ -44,6 +42,7 @@ for j = 1 : size(path,1)
 		t = time(i);
 		tone = func.rec(x, fs, t, 0);
 		fprintf('Test %d -> %s\n', t, tone);
+		pause;
 	end
 
 end

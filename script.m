@@ -30,6 +30,7 @@ func =  funcions;
 %func.rec(x, fs, t, k)
 
 path = char('cembalo', 'fletna', 'housle', 'kytara', 'piano', 'varhany1', 'varhany2');
+path = char('kytara', 'varhany1');
 
 for j = 1 : size(path,1)
 	p = strcat('tony4/', path(j,:), '.wav');

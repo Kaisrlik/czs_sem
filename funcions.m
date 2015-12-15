@@ -47,7 +47,9 @@ function [d] = fft_w(x, fs, t, k)
 	subplot(311);
 	plot(x);
 
-	X = fft(x(1+k:N+k), N + n);
+	wN=hamming(N);
+	swN=x(1+k:N+k).*wN(1:N);
+	X = fft(swN, N);
 	Xabs = abs(X);
 	subplot(312);
 	plot(x(1+k:N+k));
@@ -57,7 +59,7 @@ function [d] = fft_w(x, fs, t, k)
 	Xabs = Xabs(1:limit);
 	plot(ff, Xabs);
 
-	d = func.maxval(Xabs, 0.8);
+	d = func.maxval(Xabs, 0.7);
 	d = ff(d);
 end
 

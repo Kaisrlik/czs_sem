@@ -23,14 +23,7 @@ close all;
 
 func =  funcions;
 
-%[x, fs] = audioread('tony4/cembalo.wav');
-%[x, fs] = audioread('tony4/piano.wav');
-%t = 0.05;
-%k = 0;
-%func.rec(x, fs, t, k)
-
 path = char('cembalo', 'fletna', 'housle', 'kytara', 'piano', 'varhany1', 'varhany2');
-path = char('kytara', 'varhany1');
 
 for j = 1 : size(path,1)
 	p = strcat('tony4/', path(j,:), '.wav');
@@ -41,8 +34,8 @@ for j = 1 : size(path,1)
 	time = [0.05, 0.005, 0.015, 0.030, 0.1, 0.2, 5];
 	for i = 1 : length(time) 
 		t = time(i);
-		tone = func.rec(x, fs, t, 0);
-		fprintf('Test %d -> %s\n', t, tone);
+		[tone, freq] = func.rec(x, fs, t, 0);
+		fprintf('Test length of segment is %d -> freq is %d and corresponds %s\n', t, freq, tone);
 		pause;
 	end
 
